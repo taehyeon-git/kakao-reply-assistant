@@ -84,15 +84,15 @@ class OpenAIResponseParsingTests(unittest.TestCase):
 class ChatDedupTests(unittest.TestCase):
     def test_chat_content_key_normalizes_punctuation_spacing(self):
         self.assertEqual(
-            chat_content_key("홍길동", "홍길동", "오다 ??"),
-            chat_content_key(" 홍길동 ", "홍길동", "오다??"),
+            chat_content_key("홍길동", "홍길동", "내일 시간 괜찮아 ?"),
+            chat_content_key(" 홍길동 ", "홍길동", "내일 시간 괜찮아?"),
         )
 
     def test_recent_chat_message_seen_within_window(self):
-        records = remember_recent_chat_message([], "홍길동", "홍길동", "오다??", 1000.0, 300.0)
+        records = remember_recent_chat_message([], "홍길동", "홍길동", "내일 시간 괜찮아?", 1000.0, 300.0)
 
-        self.assertTrue(recent_chat_message_seen(records, "홍길동", "홍길동", "오다 ??", 1100.0, 300.0))
-        self.assertFalse(recent_chat_message_seen(records, "홍길동", "홍길동", "오다??", 1401.0, 300.0))
+        self.assertTrue(recent_chat_message_seen(records, "홍길동", "홍길동", "내일 시간 괜찮아 ?", 1100.0, 300.0))
+        self.assertFalse(recent_chat_message_seen(records, "홍길동", "홍길동", "내일 시간 괜찮아?", 1401.0, 300.0))
 
 
 if __name__ == "__main__":
